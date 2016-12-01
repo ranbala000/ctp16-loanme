@@ -32,5 +32,5 @@ app.use(viewHelpers.register());
 app.use(require('./controllers/'));
 
 models.sequelize.sync().then(() => {
-  app.listen(8000);
+  app.listen(8001);
 });

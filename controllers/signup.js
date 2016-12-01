@@ -26,7 +26,7 @@ module.exports = {
         res.redirect('/profile')
       );
     }).catch(() => {
-      res.render('signup');
+      res.render('/homepage');
     });
   },
 };

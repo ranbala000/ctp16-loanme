@@ -1,16 +1,17 @@
+'use strict';
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize) => {
-  const Users = sequelize.define('Users', {
-    first_name: {
+  const Users = sequelize.define('users', {
+    firstName: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    last_name: {
+    lastName: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
@@ -51,15 +52,15 @@ module.exports = (sequelize) => {
     },
   });
 
-  User.beforeCreate((user) =>
+  Users.beforeCreate((users) =>
     new sequelize.Promise((resolve) => {
-      bcrypt.hash(user.password, null, null, (err, hashedPassword) => {
+      bcrypt.hash(users.password, null, null, (err, hashedPassword) => {
         resolve(hashedPassword);
       });
     }).then((hashedPw) => {
-      user.password = hashedPw;
+      users.password = hashedPw;
     })
   );
 
-  return User;
+  return Users;
 };

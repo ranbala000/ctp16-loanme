@@ -1,36 +1,29 @@
-var express = require('express');
-var router = express.Router();
-var models = require('../models');
+const express = require('express');
+const models = require('../models');
 
-// It applies to all routes defined in this controller
-router.use(function timeLog(req, res, next) {
-  console.log('Users Controller :: Time: ', Date.now());
-  next();
-});
+module.exports = {
+  registerRouter() {
+    const router = express.Router();
 
-// define the root users route
-router.get('/', function(req, res) {
-  models.Users.findAll({})
-    .then(function (users) {
-      if (users != null) {
-        res.send('Users List: <br /><pre>' + JSON.stringify(authors, null, 4) + '</pre>');
-      } else {
-        res.send('No Users found');
-      }
+    router.get('/', this.index);
+    router.get('/:username', this.show);
+
+    return router;
+  },
+  index(req, res) {
+    models.users.findAll().then((users) => {
+      res.render('users', {
+        users,
+      });
     });
-    res.send('Get works!');
-});
-
-// define the specific user route
-router.get('/:id', function(req, res) {
-  models.Users.findById(req.params.id)
-    .then(function(user) {
-      if (user != null) {
-        res.send('Found User <br /><pre>' + JSON.stringify(user, null, 4) + '</pre>');
-      } else {
-        res.send('Did not find User');
-      }
+  },
+  show(req, res) {
+    models.users.findOne({
+      where: { username: req.params.username },
+    }).then((users) => {
+      res.render("No Items!")
+    }).catch(() => {
+      res.render('users/single');
     });
-});
-
-module.exports = router;
+  },
+};

@@ -22,11 +22,10 @@ module.exports = {
       email: req.body.email,
       password: req.body.password,
     }).then((users) => {
-      req.login(users, () =>
-        res.redirect('/profile')
-      );
+        console.log(users);
     }).catch(() => {
-      res.render('/homepage');
+	console.log(users);
+      res.render('signup');
     });
   },
 };

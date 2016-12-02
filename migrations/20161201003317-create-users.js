@@ -47,7 +47,7 @@ module.exports = {
           notEmpty: true,
         },
       },
-      password: {
+      userpassword: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {

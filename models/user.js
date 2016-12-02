@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize) => {
-  const Users = sequelize.define('users', {
+  const User = sequelize.define('user', {
     firstName: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -42,7 +42,7 @@ module.exports = (sequelize) => {
         notEmpty: true,
       },
     },
-    password: {
+    userpassword: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
@@ -51,15 +51,15 @@ module.exports = (sequelize) => {
     },
   });
 
-  Users.beforeCreate((users) =>
+  User.beforeCreate((user) =>
     new sequelize.Promise((resolve) => {
-      bcrypt.hash(users.password, null, null, (err, hashedPassword) => {
+      bcrypt.hash(user.userpassword, null, null, (err, hashedPassword) => {
         resolve(hashedPassword);
       });
     }).then((hashedPw) => {
-      users.password = hashedPw;
+      user.userpassword = hashedPw;
     })
   );
 
-  return Users;
+  return User;
 };

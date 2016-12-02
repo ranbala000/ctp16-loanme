@@ -14,17 +14,17 @@ module.exports = {
     res.render('signup');
   },
   submit(req, res) {
-    models.Users.create({
+    models.user.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       institution: req.body.institution,
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
-    }).then((users) => {
-        console.log(users);
-    }).catch(() => {
-	console.log(users);
+      userpassword: req.body.userpassword,
+    }).then((user) => {
+      res.render('profile', { user: user, success: req.flash('success') });
+    }).catch((user) => {
+      console.log(user);
       res.render('signup');
     });
   },

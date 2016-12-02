@@ -5,11 +5,11 @@ module.exports = {
   registerRouter() {
     const router = express.Router();
 
-    router.get('/', Redirect.ifNotLoggedIn(), this.index);
+    router.get('/', this.index);
 
     return router;
   },
   index(req, res) {
-    res.render('profile', { users: req.users, success: req.flash('success') });
+    res.render('profile', { user: req.user, success: req.flash('success') });
   },
 };

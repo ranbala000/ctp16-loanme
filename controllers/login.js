@@ -15,6 +15,8 @@ module.exports = {
     res.render('login', { error: req.flash('error') });
   },
   login(req, res) {
+    console.log("entered login success");
+    console.log(req.body);
     passport.authenticate('local', {
       successRedirect: '/profile',
       failureRedirect: '/login',
